@@ -4,7 +4,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>منصة أ. عبدالعزيز الفيفي - النسخة الاحترافية</title>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;700;900&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -13,7 +12,18 @@
 
     <style>
         :root { --royal-blue: #1e3a8a; --q-red: #ef4444; --bg-page: #f8fafc; --success-green: #10b981; }
-        body { font-family: 'Cairo', sans-serif; background: var(--bg-page); margin: 0; padding: 20px; display: flex; flex-direction: column; align-items: center; }
+        
+        /* تغيير الخط هنا إلى خطوط النظام الرسمية السهلة */
+        body { 
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, Arial; 
+            background: var(--bg-page); 
+            margin: 0; 
+            padding: 20px; 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            line-height: 1.6; /* مسافة مريحة للقراءة */
+        }
 
         .user-header {
             width: 100%; max-width: 850px; background: white; border-radius: 15px; padding: 20px;
@@ -22,8 +32,8 @@
             margin-bottom: 30px; box-sizing: border-box;
         }
         .header-right { text-align: right; } .header-left { text-align: left; }
-        .user-name { margin: 0; color: var(--royal-blue); font-weight: 900; font-size: 1.5rem; }
-        .school-name { margin: 0; color: #64748b; font-weight: 700; font-size: 1rem; }
+        .user-name { margin: 0; color: var(--royal-blue); font-weight: bold; font-size: 1.5rem; }
+        .school-name { margin: 0; color: #64748b; font-weight: bold; font-size: 1rem; }
         .logo-box { background: var(--royal-blue); width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; }
 
         .container { width: 100%; max-width: 850px; padding-bottom: 120px; }
@@ -33,45 +43,43 @@
         .unsolved { border: 2px solid #ef4444 !important; background: #fff1f2 !important; }
 
         .smart-paste-area { margin-bottom: 20px; background: #f0fdf4; padding: 15px; border-radius: 12px; border: 2px dashed var(--success-green); }
-        .smart-input { width: 100%; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; font-family: 'Cairo'; font-size: 1rem; outline: none; }
+        .smart-input { width: 100%; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; font-family: inherit; font-size: 1rem; outline: none; }
 
         .card-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
-        .q-number-badge { background: var(--royal-blue); color: white; padding: 2px 15px; border-radius: 50px; font-weight: 900; font-size: 0.9rem; }
-        
-        /* تنسيق نوع السؤال للطالب */
-        .q-type-label { font-size: 0.8rem; font-weight: 900; color: #3b82f6; background: #eff6ff; padding: 4px 12px; border-radius: 20px; border: 1px solid #dbeafe; }
+        .q-number-badge { background: var(--royal-blue); color: white; padding: 2px 15px; border-radius: 50px; font-weight: bold; font-size: 0.9rem; }
+        .q-type-label { font-size: 0.85rem; font-weight: bold; color: #3b82f6; background: #eff6ff; padding: 4px 12px; border-radius: 20px; border: 1px solid #dbeafe; }
 
-        .type-select { background: #f1f5f9; border: none; padding: 8px; border-radius: 10px; font-weight: 700; font-family: 'Cairo'; cursor: pointer; }
+        .type-select { background: #f1f5f9; border: none; padding: 8px; border-radius: 10px; font-weight: bold; font-family: inherit; cursor: pointer; }
 
-        .estieab-box { background: #fff9c4 !important; border: 2px solid #fbc02d; border-radius: 12px; padding: 15px; margin-bottom: 15px; color: #000; font-weight: 700; line-height: 1.8; width: 100%; box-sizing: border-box; text-align: right; min-height: 100px; height: auto; white-space: pre-wrap; }
+        .estieab-box { background: #fff9c4 !important; border: 2px solid #fbc02d; border-radius: 12px; padding: 15px; margin-bottom: 15px; color: #000; font-weight: bold; line-height: 1.8; width: 100%; box-sizing: border-box; text-align: right; min-height: 100px; height: auto; white-space: pre-wrap; font-size: 1.1rem; }
         
         .q-text-input { 
             width: 100%; padding: 12px 15px; border: 2px solid #e2e8f0; border-radius: 12px; 
-            color: var(--q-red); font-weight: 900; font-size: 1.15rem; margin-bottom: 15px; 
-            outline: none; text-align: right; box-sizing: border-box; min-height: 50px; height: auto; word-wrap: break-word;
+            color: var(--q-red); font-weight: bold; font-size: 1.2rem; margin-bottom: 15px; 
+            outline: none; text-align: right; box-sizing: border-box; min-height: 50px; height: auto; word-wrap: break-word; font-family: inherit;
         }
 
         .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .opt-pair-row { display: flex; align-items: center; background: white; border: 1.5px solid #d1d5db; border-radius: 10px; padding: 12px; box-sizing: border-box; cursor: pointer; transition: 0.2s; }
-        .opt-label { font-weight: 900; color: var(--royal-blue); margin-left: 5px; white-space: pre; }
-        .opt-word { width: 100%; border: none; outline: none; font-weight: 900; color: #000; background: transparent; text-align: right; font-family: 'Cairo'; cursor: inherit; font-size: 0.95rem; }
+        .opt-label { font-weight: bold; color: var(--royal-blue); margin-left: 5px; white-space: pre; font-size: 1.05rem; }
+        .opt-word { width: 100%; border: none; outline: none; font-weight: bold; color: #000; background: transparent; text-align: right; font-family: inherit; cursor: inherit; font-size: 1.1rem; }
 
         .pair-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px; background: #fff1f2; padding: 15px; border-radius: 12px; border: 1.5px dashed #fca5a5; width: 100%; box-sizing: border-box; }
-        .pair-word { width: 45%; text-align: center; border: none; background: white; padding: 10px; border-radius: 8px; color: var(--q-red); font-weight: 900; font-size: 1.2rem; }
+        .pair-word { width: 45%; text-align: center; border: none; background: white; padding: 10px; border-radius: 8px; color: var(--q-red); font-weight: bold; font-size: 1.3rem; font-family: inherit; }
 
         .correct-ans-box { margin-top: 15px; padding: 10px; background: #f0fdf4; border-radius: 10px; border: 1px solid #bbf7d0; text-align: right; }
-        .correct-input { width: 100%; background: transparent; border: none; outline: none; color: #166534; font-weight: 900; text-align: right; font-family: 'Cairo'; }
+        .correct-input { width: 100%; background: transparent; border: none; outline: none; color: #166534; font-weight: bold; text-align: right; font-family: inherit; }
 
         .controls { position: fixed; bottom: 20px; left: 50%; transform: translateX(-50%); display: flex; flex-wrap: nowrap; gap: 8px; z-index: 1000; background: #1e293b; padding: 10px 15px; border-radius: 50px; box-shadow: 0 10px 25px rgba(0,0,0,0.2); align-items: center; width: max-content; }
-        .btn { border: none; padding: 10px 18px; border-radius: 30px; font-weight: 800; cursor: pointer; color: white; display: flex; align-items: center; gap: 8px; transition: 0.3s; font-family: 'Cairo'; font-size: 0.9rem; white-space: nowrap; }
+        .btn { border: none; padding: 10px 18px; border-radius: 30px; font-weight: bold; cursor: pointer; color: white; display: flex; align-items: center; gap: 8px; transition: 0.3s; font-family: inherit; font-size: 0.9rem; white-space: nowrap; }
         .btn-add { background: #3b82f6; } .btn-save { background: #a855f7; } .btn-load { background: #4f46e5; }
         .btn-link { background: #06b6d4; } .btn-del { background: #f97316; } .btn-pdf { background: #ef4444; }
         .btn-img { background: #10b981; } .btn-clear { background: #64748b; padding: 10px; border-radius: 50%; }
 
         body.student-mode .controls, body.student-mode .remove-btn, body.student-mode .type-select, body.student-mode .correct-ans-box, body.student-mode .smart-paste-area, body.student-mode .admin-only { display: none !important; }
-        body:not(.student-mode) .q-type-label { display: none; } /* إخفاء الليبل في وضع الأدمن لأن القائمة موجودة */
+        body:not(.student-mode) .q-type-label { display: none; }
 
-        body.student-mode .q-text-input, body.student-mode .opt-word, body.student-mode .pair-word { pointer-events: none; border: none; background: transparent !important; }
+        body.student-mode .q-text-input, body.student-mode .opt-word, body.student-mode .pair-word { pointer-events: none; border: none; background: transparent !important; color: #000 !important; }
         body.student-mode .selected-opt { background: #dbeafe !important; border: 2px solid #3b82f6 !important; }
         body.locked-mode .opt-pair-row { pointer-events: none !important; }
 
@@ -86,7 +94,7 @@
     <div id="modal-overlay" onclick="closeReport()"></div>
     <div id="report-modal">
         <h2 style="text-align: center; color: var(--royal-blue);">تقرير أداء الطالب 🎯</h2>
-        <div id="score-summary" style="text-align: center; font-size: 1.4rem; font-weight: 900; margin: 20px 0;"></div>
+        <div id="score-summary" style="text-align: center; font-size: 1.4rem; font-weight: bold; margin: 20px 0;"></div>
         <table class="report-table">
             <thead>
                 <tr><th>#</th><th>السؤال</th><th>إجابتك</th><th>الصحيحة</th><th>النتيجة</th></tr>
@@ -230,7 +238,7 @@
         }
 
         function renderQArea(t, d) {
-            if (t === 'tanazor') return `<div class="pair-row"><input type="text" class="pair-word t1" placeholder="كلمة 1" value="${d?d.text1:''}" oninput="saveAll()"><span style="color:red; font-weight:900; font-size:1.5rem"> : </span><input type="text" class="pair-word t2" placeholder="كلمة 2" value="${d?d.text2:''}" oninput="saveAll()"></div>`;
+            if (t === 'tanazor') return `<div class="pair-row"><input type="text" class="pair-word t1" placeholder="كلمة 1" value="${d?d.text1:''}" oninput="saveAll()"><span style="color:red; font-weight:bold; font-size:1.5rem"> : </span><input type="text" class="pair-word t2" placeholder="كلمة 2" value="${d?d.text2:''}" oninput="saveAll()"></div>`;
             if (t === 'estieab') return `<div class="estieab-box" contenteditable="true" oninput="saveAll()" placeholder="نص القطعة...">${d?d.text_area||'' : ''}</div><textarea class="q-text-input q-main" placeholder="السؤال..." oninput="saveAll()">${d?d.text:''}</textarea>`;
             return `<textarea class="q-text-input q-main" placeholder="اكتب السؤال هنا..." oninput="saveAll()">${d?d.text:''}</textarea>`;
         }
@@ -238,7 +246,7 @@
         function renderOptions(t, d) {
             let h = '';
             for(let i=0; i<4; i++) {
-                if(t==='tanazor') h+=`<div class="opt-pair-row"><span class="opt-label">${labels[i]}</span><input type="text" class="opt-word op1" placeholder="1" value="${d?.opt_pair_val1?.[i] || ''}" oninput="saveAll()"><span style="color:red; font-weight:900"> : </span><input type="text" class="opt-word op2" placeholder="2" value="${d?.opt_pair_val2?.[i] || ''}" oninput="saveAll()"></div>`;
+                if(t==='tanazor') h+=`<div class="opt-pair-row"><span class="opt-label">${labels[i]}</span><input type="text" class="opt-word op1" placeholder="1" value="${d?.opt_pair_val1?.[i] || ''}" oninput="saveAll()"><span style="color:red; font-weight:bold"> : </span><input type="text" class="opt-word op2" placeholder="2" value="${d?.opt_pair_val2?.[i] || ''}" oninput="saveAll()"></div>`;
                 else h+=`<div class="opt-pair-row"><span class="opt-label">${labels[i]}</span><input type="text" class="opt-word opt" style="margin-right:5px" placeholder="خيار ${labels[i]}" value="${d?.opts?.[i]||''}" oninput="saveAll()"></div>`;
             }
             return h;
@@ -323,24 +331,24 @@
                 cards.slice(i, i+3).forEach((orig, idx) => {
                     const clone = orig.cloneNode(true);
                     const type = orig.querySelector('.type-select').value;
-                    clone.querySelector('.card-meta').innerHTML = `<span class="q-number-badge">السؤال ${i+idx+1}</span><span style="font-size:0.85rem; font-weight:900; color:#3b82f6; background:#eff6ff; padding:4px 12px; border-radius:20px; margin-right:15px;">${typeMap[type]}</span>`;
+                    clone.querySelector('.card-meta').innerHTML = `<span class="q-number-badge">السؤال ${i+idx+1}</span><span style="font-size:0.85rem; font-weight:bold; color:#3b82f6; background:#eff6ff; padding:4px 12px; border-radius:20px; margin-right:15px;">${typeMap[type]}</span>`;
                     
                     if(type === 'tanazor') {
-                        clone.querySelector('.pair-row').innerHTML = `<div style="display:flex; justify-content:center; align-items:center; width:100%; font-weight:900; font-size:1.5rem; color:var(--q-red);"><span>${orig.querySelector('.t1').value}</span><span style="margin:0 10px;"> : </span><span>${orig.querySelector('.t2').value}</span></div>`;
+                        clone.querySelector('.pair-row').innerHTML = `<div style="display:flex; justify-content:center; align-items:center; width:100%; font-weight:bold; font-size:1.5rem; color:var(--q-red);"><span>${orig.querySelector('.t1').value}</span><span style="margin:0 10px;"> : </span><span>${orig.querySelector('.t2').value}</span></div>`;
                         clone.querySelectorAll('.opt-pair-row').forEach((r, oIdx) => {
-                            r.innerHTML = `<span style="background:var(--royal-blue); color:white; padding:2px 8px; border-radius:5px; margin-left:10px;">${labels[oIdx]}</span> <div style="display:flex; justify-content:center; width:100%; font-weight:900;"><span>${orig.querySelectorAll('.op1')[oIdx].value}</span><span style="margin:0 5px;"> : </span><span>${orig.querySelectorAll('.op2')[oIdx].value}</span></div>`;
+                            r.innerHTML = `<span style="background:var(--royal-blue); color:white; padding:2px 8px; border-radius:5px; margin-left:10px;">${labels[oIdx]}</span> <div style="display:flex; justify-content:center; width:100%; font-weight:bold;"><span>${orig.querySelectorAll('.op1')[oIdx].value}</span><span style="margin:0 5px;"> : </span><span>${orig.querySelectorAll('.op2')[oIdx].value}</span></div>`;
                         });
                     } else {
                         clone.querySelectorAll('input, .estieab-box, textarea').forEach((inp, ii) => {
                             const val = inp.value || inp.innerText;
                             const div = document.createElement('div'); div.innerText = val;
                             const style = window.getComputedStyle(inp);
-                            div.style = `background:${style.backgroundColor}; color:${style.color}; padding:10px; border-radius:10px; font-weight:900; font-size:1.15rem; border:${style.border}; margin-bottom:10px; text-align:right; white-space:pre-wrap;`;
+                            div.style = `background:${style.backgroundColor}; color:#000; padding:10px; border-radius:10px; font-weight:bold; font-size:1.15rem; border:${style.border}; margin-bottom:10px; text-align:right; white-space:pre-wrap;`;
                             inp.replaceWith(div);
                         });
                         clone.querySelectorAll('.opt-pair-row').forEach((r, oIdx) => {
                             const val = orig.querySelectorAll('.opt')[oIdx].value;
-                            r.innerHTML = `<span style="background:var(--royal-blue); color:white; padding:2px 8px; border-radius:5px; margin-left:10px;">${labels[oIdx]}</span> <span style="font-weight:900;">${val}</span>`;
+                            r.innerHTML = `<span style="background:var(--royal-blue); color:white; padding:2px 8px; border-radius:5px; margin-left:10px;">${labels[oIdx]}</span> <span style="font-weight:bold; color:#000;">${val}</span>`;
                         });
                     }
                     clone.querySelectorAll('.remove-btn, .type-select, .correct-ans-box, .smart-paste-area, .admin-only').forEach(e => e.remove());
@@ -359,7 +367,7 @@
             const cards = Array.from(document.querySelectorAll('.question-card'));
             for (let i = 0; i < cards.length; i += 3) {
                 const page = document.createElement('div');
-                page.style = "width:210mm; padding:15mm; background:white; box-sizing:border-box;";
+                page.style = "width:210mm; padding:15mm; background:white; box-sizing:border-box; font-family: Segoe UI, Tahoma, sans-serif;";
                 page.appendChild(document.getElementById('main-header').cloneNode(true));
                 cards.slice(i, i+3).forEach((orig, idx) => {
                     const clone = orig.cloneNode(true);
