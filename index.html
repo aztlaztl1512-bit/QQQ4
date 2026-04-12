@@ -30,25 +30,39 @@
         .question-card { background: white; border-radius: 20px; padding: 25px; margin-bottom: 25px; border: 2px solid #e2e8f0; position: relative; text-align: right; box-sizing: border-box; }
         .question-card::before { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 8px; background: var(--royal-blue); }
         
-        /* منطقة اللصق الذكي */
         .smart-paste-area { margin-bottom: 20px; background: #f0fdf4; padding: 15px; border-radius: 12px; border: 2px dashed var(--success-green); }
-        .smart-input { width: 100%; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; font-family: 'Cairo'; font-size: 1rem; outline: none; transition: 0.3s; }
-        .smart-input:focus { border-color: var(--success-green); box-shadow: 0 0 0 3px rgba(16, 185, 129, 0.1); }
+        .smart-input { width: 100%; border: 1px solid #bbf7d0; padding: 12px; border-radius: 8px; font-family: 'Cairo'; font-size: 1rem; outline: none; }
 
         .card-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
         .q-number-badge { background: var(--royal-blue); color: white; padding: 2px 15px; border-radius: 50px; font-weight: 900; font-size: 0.9rem; }
         .type-select { background: #f1f5f9; border: none; padding: 8px; border-radius: 10px; font-weight: 700; font-family: 'Cairo'; cursor: pointer; }
 
         .estieab-box { background: #fff9c4 !important; border: 2px solid #fbc02d; border-radius: 12px; padding: 15px; margin-bottom: 15px; color: #000; font-weight: 700; line-height: 1.8; width: 100%; box-sizing: border-box; text-align: right; min-height: 100px; height: auto; white-space: pre-wrap; }
-        .q-text-input { width: 100%; padding: 15px; border: 2px solid #e2e8f0; border-radius: 12px; color: var(--q-red); font-weight: 900; font-size: 1.3rem; margin-bottom: 15px; outline: none; text-align: right; box-sizing: border-box; }
+        
+        /* التعديل هنا: تصغير حجم الخط وجعل الارتفاع مرن للسؤال */
+        .q-text-input { 
+            width: 100%; 
+            padding: 12px 15px; 
+            border: 2px solid #e2e8f0; 
+            border-radius: 12px; 
+            color: var(--q-red); 
+            font-weight: 900; 
+            font-size: 1.15rem; /* تصغير الخط قليلاً */
+            margin-bottom: 15px; 
+            outline: none; 
+            text-align: right; 
+            box-sizing: border-box; 
+            min-height: 50px; 
+            height: auto; /* السماح بالتمدد الطولي */
+            word-wrap: break-word;
+        }
 
         .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .opt-pair-row { display: flex; align-items: center; background: white; border: 1.5px solid #d1d5db; border-radius: 10px; padding: 12px; box-sizing: border-box; cursor: pointer; transition: 0.2s; }
-        .opt-pair-row:hover { border-color: var(--royal-blue); background: #f8fafc; }
-        .opt-word { width: 100%; border: none; outline: none; font-weight: 900; color: #000; background: transparent; text-align: right; font-family: 'Cairo'; cursor: inherit; }
+        .opt-word { width: 100%; border: none; outline: none; font-weight: 900; color: #000; background: transparent; text-align: right; font-family: 'Cairo'; cursor: inherit; font-size: 0.95rem; }
 
         .pair-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px; background: #fff1f2; padding: 15px; border-radius: 12px; border: 1.5px dashed #fca5a5; width: 100%; box-sizing: border-box; }
-        .pair-word { width: 45%; text-align: center; border: none; background: white; padding: 10px; border-radius: 8px; color: var(--q-red); font-weight: 900; font-size: 1.3rem; }
+        .pair-word { width: 45%; text-align: center; border: none; background: white; padding: 10px; border-radius: 8px; color: var(--q-red); font-weight: 900; font-size: 1.2rem; }
 
         .correct-ans-box { margin-top: 15px; padding: 10px; background: #f0fdf4; border-radius: 10px; border: 1px solid #bbf7d0; text-align: right; }
         .correct-input { width: 100%; background: transparent; border: none; outline: none; color: #166534; font-weight: 900; text-align: right; font-family: 'Cairo'; }
@@ -136,7 +150,7 @@
                     <div class="card-meta">
                         <span class="q-number-badge"></span>
                         <select class="type-select" onchange="toggleType(this)">${Object.keys(typeMap).map(k=>`<option value="${k}" ${type===k?'selected':''}>${typeMap[k]}</option>`).join('')}</select>
-                        <span style="font-size:0.8rem; color:var(--success-green); font-weight:bold"><i class="fas fa-magic"></i> صندوق اللصق السريع</span>
+                        <span style="font-size:0.8rem; color:var(--success-green); font-weight:bold"><i class="fas fa-magic"></i> الصق هنا للتوزيع التلقائي</span>
                     </div>
                     <i class="fas fa-times-circle remove-btn" style="color:#cbd5e1; cursor:pointer;" onclick="this.closest('.question-card').remove();updateNumbers();saveAll();"></i>
                 </div>
@@ -166,28 +180,22 @@
             let text = textarea.value.trim();
             if(!text) return;
 
-            // تنظيف النص من الزخارف والحروف الزائدة
             const lines = text.split('\n').map(l => l.trim()).filter(l => l);
             
             if (type === 'tanazor') {
-                // استخراج الرأس: أول سطر يحتوي على : أو مسافة
                 const headLine = lines[0];
                 const headParts = headLine.split(/[:\s\-]+/).filter(x => x && x.length > 1);
                 if(headParts.length >= 2) {
                     card.querySelector('.t1').value = headParts[0];
                     card.querySelector('.t2').value = headParts[1];
                 }
-
-                // استخراج الخيارات: استبعاد السطر الذي يشبه الرأس تماماً
                 const choices = lines.filter(l => {
                     const parts = l.split(/[:\s\-]+/).filter(x => x && x.length > 1);
-                    // إذا كان الخيار هو نفس كلمات الرأس تماماً، نتجاهله
                     return !(parts.includes(headParts[0]) && parts.includes(headParts[1]));
                 }).filter(l => /^[أبجدهـ][\s\)\-]/.test(l) || l.includes(':') || l.includes('-'));
 
                 const ops1 = card.querySelectorAll('.op1');
                 const ops2 = card.querySelectorAll('.op2');
-                
                 choices.forEach((l, i) => {
                     if(i < 4) {
                         const pair = l.replace(/^[أبجدهـ][\s\)\-:]+/, '').split(/[:\s\-]+/).filter(x => x);
@@ -197,15 +205,11 @@
                         }
                     }
                 });
-            } 
-            else if (type === 'shaza') {
-                // المفردة الشاذة
+            } else if (type === 'shaza') {
                 const words = text.split(/[\-\s,|،]+/).filter(w => w.length > 1 && !/^[أبجدهـ]$/.test(w));
                 const opts = card.querySelectorAll('.opt');
                 words.forEach((w, i) => { if(i < 4) opts[i].value = w; });
-            }
-            else if (type === 'estieab') {
-                // استيعاب المقروء
+            } else if (type === 'estieab') {
                 if(lines.length >= 3) {
                     card.querySelector('.estieab-box').innerText = lines[0];
                     card.querySelector('.q-main').value = lines[1];
@@ -213,9 +217,7 @@
                     const opts = card.querySelectorAll('.opt');
                     choiceLines.forEach((l, i) => { if(i < 4) opts[i].value = l.replace(/^[أبجدهـ][\s\)\-]+/, ''); });
                 }
-            }
-            else {
-                // إكمال جمل / خطأ سياقي
+            } else {
                 card.querySelector('.q-main').value = lines[0];
                 const choiceLines = lines.slice(1).filter(l => /^[أبجدهـ][\s\)\-]/.test(l) || l.includes('-'));
                 const opts = card.querySelectorAll('.opt');
@@ -228,8 +230,8 @@
 
         function renderQArea(t, d) {
             if (t === 'tanazor') return `<div class="pair-row"><input type="text" class="pair-word t1" placeholder="كلمة 1" value="${d?d.text1:''}" oninput="saveAll()"><span style="color:red; font-weight:900; font-size:1.5rem"> : </span><input type="text" class="pair-word t2" placeholder="كلمة 2" value="${d?d.text2:''}" oninput="saveAll()"></div>`;
-            if (t === 'estieab') return `<div class="estieab-box" contenteditable="true" oninput="saveAll()" placeholder="نص القطعة...">${d?d.text_area||'' : ''}</div><input type="text" class="q-text-input q-main" placeholder="السؤال..." value="${d?d.text:''}" oninput="saveAll()">`;
-            return `<input type="text" class="q-text-input q-main" placeholder="اكتب السؤال هنا..." value="${d?d.text:''}" oninput="saveAll()">`;
+            if (t === 'estieab') return `<div class="estieab-box" contenteditable="true" oninput="saveAll()" placeholder="نص القطعة...">${d?d.text_area||'' : ''}</div><textarea class="q-text-input q-main" placeholder="السؤال..." oninput="saveAll()">${d?d.text:''}</textarea>`;
+            return `<textarea class="q-text-input q-main" placeholder="اكتب السؤال هنا..." oninput="saveAll()">${d?d.text:''}</textarea>`;
         }
 
         function renderOptions(t, d) {
@@ -308,11 +310,11 @@
                             r.innerHTML = `<span style="background:var(--royal-blue); color:white; padding:2px 8px; border-radius:5px; margin-left:10px;">${['أ','ب','ج','د'][oIdx]}</span> <div style="display:flex; justify-content:center; width:100%; font-weight:900;"><span>${orig.querySelectorAll('.op1')[oIdx].value}</span><span style="margin:0 5px;"> : </span><span>${orig.querySelectorAll('.op2')[oIdx].value}</span></div>`;
                         });
                     } else {
-                        clone.querySelectorAll('input, .estieab-box').forEach((inp, ii) => {
+                        clone.querySelectorAll('input, .estieab-box, textarea').forEach((inp, ii) => {
                             const val = inp.value || inp.innerText;
                             const div = document.createElement('div'); div.innerText = val;
                             const style = window.getComputedStyle(inp);
-                            div.style = `background:${style.backgroundColor}; color:${style.color}; padding:10px; border-radius:10px; font-weight:900; font-size:1.3rem; border:${style.border}; margin-bottom:10px; text-align:right;`;
+                            div.style = `background:${style.backgroundColor}; color:${style.color}; padding:10px; border-radius:10px; font-weight:900; font-size:1.15rem; border:${style.border}; margin-bottom:10px; text-align:right; white-space:pre-wrap;`;
                             inp.replaceWith(div);
                         });
                         clone.querySelectorAll('.opt-pair-row').forEach((r, oIdx) => {
