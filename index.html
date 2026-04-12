@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منصة أ. عبدالعزيز الفيفي - النسخة الاحترافية</title>
+    <title>منصة أ. عبدالعزيز الفيفي - النسخة المعتمدة</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
@@ -13,7 +13,6 @@
     <style>
         :root { --royal-blue: #1e3a8a; --q-red: #ef4444; --bg-page: #f8fafc; --success-green: #10b981; }
         
-        /* تغيير الخط هنا إلى خطوط النظام الرسمية السهلة */
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, Arial; 
             background: var(--bg-page); 
@@ -22,7 +21,7 @@
             display: flex; 
             flex-direction: column; 
             align-items: center; 
-            line-height: 1.6; /* مسافة مريحة للقراءة */
+            line-height: 1.6;
         }
 
         .user-header {
@@ -55,7 +54,7 @@
         
         .q-text-input { 
             width: 100%; padding: 12px 15px; border: 2px solid #e2e8f0; border-radius: 12px; 
-            color: var(--q-red); font-weight: bold; font-size: 1.2rem; margin-bottom: 15px; 
+            color: var(--q-red) !important; font-weight: bold; font-size: 1.2rem; margin-bottom: 15px; 
             outline: none; text-align: right; box-sizing: border-box; min-height: 50px; height: auto; word-wrap: break-word; font-family: inherit;
         }
 
@@ -65,7 +64,7 @@
         .opt-word { width: 100%; border: none; outline: none; font-weight: bold; color: #000; background: transparent; text-align: right; font-family: inherit; cursor: inherit; font-size: 1.1rem; }
 
         .pair-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px; background: #fff1f2; padding: 15px; border-radius: 12px; border: 1.5px dashed #fca5a5; width: 100%; box-sizing: border-box; }
-        .pair-word { width: 45%; text-align: center; border: none; background: white; padding: 10px; border-radius: 8px; color: var(--q-red); font-weight: bold; font-size: 1.3rem; font-family: inherit; }
+        .pair-word { width: 45%; text-align: center; border: none; background: white; padding: 10px; border-radius: 8px; color: var(--q-red) !important; font-weight: bold; font-size: 1.3rem; font-family: inherit; }
 
         .correct-ans-box { margin-top: 15px; padding: 10px; background: #f0fdf4; border-radius: 10px; border: 1px solid #bbf7d0; text-align: right; }
         .correct-input { width: 100%; background: transparent; border: none; outline: none; color: #166534; font-weight: bold; text-align: right; font-family: inherit; }
@@ -79,7 +78,12 @@
         body.student-mode .controls, body.student-mode .remove-btn, body.student-mode .type-select, body.student-mode .correct-ans-box, body.student-mode .smart-paste-area, body.student-mode .admin-only { display: none !important; }
         body:not(.student-mode) .q-type-label { display: none; }
 
-        body.student-mode .q-text-input, body.student-mode .opt-word, body.student-mode .pair-word { pointer-events: none; border: none; background: transparent !important; color: #000 !important; }
+        /* تفعيل الألوان للطالب مع الخط العادي */
+        body.student-mode .q-text-input, body.student-mode .pair-word { 
+            pointer-events: none; border: none; background: transparent !important; 
+            color: var(--q-red) !important; /* استعادة اللون الأحمر للسؤال */
+        }
+        body.student-mode .opt-word { pointer-events: none; border: none; background: transparent !important; color: #000 !important; }
         body.student-mode .selected-opt { background: #dbeafe !important; border: 2px solid #3b82f6 !important; }
         body.locked-mode .opt-pair-row { pointer-events: none !important; }
 
@@ -343,7 +347,7 @@
                             const val = inp.value || inp.innerText;
                             const div = document.createElement('div'); div.innerText = val;
                             const style = window.getComputedStyle(inp);
-                            div.style = `background:${style.backgroundColor}; color:#000; padding:10px; border-radius:10px; font-weight:bold; font-size:1.15rem; border:${style.border}; margin-bottom:10px; text-align:right; white-space:pre-wrap;`;
+                            div.style = `background:${style.backgroundColor}; color:var(--q-red); padding:10px; border-radius:10px; font-weight:bold; font-size:1.15rem; border:${style.border}; margin-bottom:10px; text-align:right; white-space:pre-wrap;`;
                             inp.replaceWith(div);
                         });
                         clone.querySelectorAll('.opt-pair-row').forEach((r, oIdx) => {
