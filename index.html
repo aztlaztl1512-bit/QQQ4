@@ -78,10 +78,9 @@
         body.student-mode .controls, body.student-mode .remove-btn, body.student-mode .type-select, body.student-mode .correct-ans-box, body.student-mode .smart-paste-area, body.student-mode .admin-only { display: none !important; }
         body:not(.student-mode) .q-type-label { display: none; }
 
-        /* تفعيل الألوان للطالب مع الخط العادي */
         body.student-mode .q-text-input, body.student-mode .pair-word { 
             pointer-events: none; border: none; background: transparent !important; 
-            color: var(--q-red) !important; /* استعادة اللون الأحمر للسؤال */
+            color: var(--q-red) !important;
         }
         body.student-mode .opt-word { pointer-events: none; border: none; background: transparent !important; color: #000 !important; }
         body.student-mode .selected-opt { background: #dbeafe !important; border: 2px solid #3b82f6 !important; }
@@ -218,10 +217,18 @@
                         }
                     }
                 });
-            } else if (type === 'shaza') {
-                const words = text.split(/[\-\s,|،]+/).filter(w => w.length > 1 && !/^[أبجدهـ]$/.test(w));
-                const opts = card.querySelectorAll('.opt');
-                words.forEach((w, i) => { if(i < 4) opts[i].value = w; });
+            } else if (type === 'shaza' || type === 'irtibat') {
+                // المفردة الشاذة أو الارتباط والاختلاف
+                const words = text.split(/[\-\s,|،\n]+/).filter(w => w.length > 1 && !/^[أبجدهـ]$/.test(w));
+                // إذا كان النوع "ارتباط واختلاف" وكان هناك 5 كلمات، اجعل الأولى هي رأس السؤال
+                if (type === 'irtibat' && words.length >= 5) {
+                    card.querySelector('.q-main').value = words[0];
+                    const opts = card.querySelectorAll('.opt');
+                    words.slice(1, 5).forEach((w, i) => { if(i < 4) opts[i].value = w; });
+                } else {
+                    const opts = card.querySelectorAll('.opt');
+                    words.forEach((w, i) => { if(i < 4) opts[i].value = w; });
+                }
             } else if (type === 'estieab') {
                 if(lines.length >= 3) {
                     card.querySelector('.estieab-box').innerText = lines[0];
