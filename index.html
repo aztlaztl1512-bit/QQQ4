@@ -15,13 +15,8 @@
         
         body { 
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif, Arial; 
-            background: var(--bg-page); 
-            margin: 0; 
-            padding: 20px; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            line-height: 1.6;
+            background: var(--bg-page); margin: 0; padding: 20px; 
+            display: flex; flex-direction: column; align-items: center; line-height: 1.6;
         }
 
         .user-header {
@@ -30,7 +25,6 @@
             box-shadow: 0 4px 10px rgba(0,0,0,0.05); border-bottom: 5px solid #3b82f6; 
             margin-bottom: 30px; box-sizing: border-box;
         }
-        .header-right { text-align: right; } .header-left { text-align: left; }
         .user-name { margin: 0; color: var(--royal-blue); font-weight: bold; font-size: 1.5rem; }
         .school-name { margin: 0; color: #64748b; font-weight: bold; font-size: 1rem; }
         .logo-box { background: var(--royal-blue); width: 55px; height: 55px; border-radius: 12px; display: flex; align-items: center; justify-content: center; color: white; font-size: 1.4rem; }
@@ -38,7 +32,6 @@
         .container { width: 100%; max-width: 850px; padding-bottom: 120px; }
         .question-card { background: white; border-radius: 20px; padding: 25px; margin-bottom: 25px; border: 2px solid #e2e8f0; position: relative; text-align: right; box-sizing: border-box; transition: 0.3s; }
         .question-card::before { content: ""; position: absolute; right: 0; top: 0; bottom: 0; width: 8px; background: var(--royal-blue); }
-        
         .unsolved { border: 2px solid #ef4444 !important; background: #fff1f2 !important; }
 
         .smart-paste-area { margin-bottom: 20px; background: #f0fdf4; padding: 15px; border-radius: 12px; border: 2px dashed var(--success-green); }
@@ -47,16 +40,10 @@
         .card-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
         .q-number-badge { background: var(--royal-blue); color: white; padding: 2px 15px; border-radius: 50px; font-weight: bold; font-size: 0.9rem; }
         .q-type-label { font-size: 0.85rem; font-weight: bold; color: #3b82f6; background: #eff6ff; padding: 4px 12px; border-radius: 20px; border: 1px solid #dbeafe; }
-
         .type-select { background: #f1f5f9; border: none; padding: 8px; border-radius: 10px; font-weight: bold; font-family: inherit; cursor: pointer; }
 
         .estieab-box { background: #fff9c4 !important; border: 2px solid #fbc02d; border-radius: 12px; padding: 15px; margin-bottom: 15px; color: #000; font-weight: bold; line-height: 1.8; width: 100%; box-sizing: border-box; text-align: right; min-height: 100px; height: auto; white-space: pre-wrap; font-size: 1.1rem; }
-        
-        .q-text-input { 
-            width: 100%; padding: 12px 15px; border: 2px solid #e2e8f0; border-radius: 12px; 
-            color: var(--q-red) !important; font-weight: bold; font-size: 1.2rem; margin-bottom: 15px; 
-            outline: none; text-align: right; box-sizing: border-box; min-height: 50px; height: auto; word-wrap: break-word; font-family: inherit;
-        }
+        .q-text-input { width: 100%; padding: 12px 15px; border: 2px solid #e2e8f0; border-radius: 12px; color: var(--q-red) !important; font-weight: bold; font-size: 1.2rem; margin-bottom: 15px; outline: none; text-align: right; box-sizing: border-box; min-height: 50px; height: auto; word-wrap: break-word; font-family: inherit; }
 
         .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .opt-pair-row { display: flex; align-items: center; background: white; border: 1.5px solid #d1d5db; border-radius: 10px; padding: 12px; box-sizing: border-box; cursor: pointer; transition: 0.2s; }
@@ -77,11 +64,7 @@
 
         body.student-mode .controls, body.student-mode .remove-btn, body.student-mode .type-select, body.student-mode .correct-ans-box, body.student-mode .smart-paste-area, body.student-mode .admin-only { display: none !important; }
         body:not(.student-mode) .q-type-label { display: none; }
-
-        body.student-mode .q-text-input, body.student-mode .pair-word { 
-            pointer-events: none; border: none; background: transparent !important; 
-            color: var(--q-red) !important;
-        }
+        body.student-mode .q-text-input, body.student-mode .pair-word { pointer-events: none; border: none; background: transparent !important; color: var(--q-red) !important; }
         body.student-mode .opt-word { pointer-events: none; border: none; background: transparent !important; color: #000 !important; }
         body.student-mode .selected-opt { background: #dbeafe !important; border: 2px solid #3b82f6 !important; }
         body.locked-mode .opt-pair-row { pointer-events: none !important; }
@@ -132,7 +115,14 @@
     </div>
 
     <script>
-        const typeMap = { 'normal': 'إكمال جمل / خطأ سياقي', 'tanazor': 'تناظر لفظي ( : )', 'estieab': 'استيعاب المقروء', 'shaza': 'المفردة الشاذة', 'irtibat': 'الارتباط والاختلاف' };
+        const typeMap = { 
+            'ekmal': 'إكمال جمل', 
+            'khata': 'خطأ سياقي',
+            'tanazor': 'تناظر لفظي ( : )', 
+            'estieab': 'استيعاب المقروء', 
+            'shaza': 'المفردة الشاذة', 
+            'irtibat': 'الارتباط والاختلاف' 
+        };
         const labels = ['أ) ', 'ب) ', 'ج) ', 'د) '];
 
         const firebaseConfig = {
@@ -153,7 +143,7 @@
             const container = document.getElementById('quiz-content');
             const card = document.createElement('div');
             card.className = 'question-card';
-            const type = data ? data.type : 'normal';
+            const type = data ? data.type : 'ekmal';
 
             card.innerHTML = `
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px">
@@ -195,55 +185,22 @@
             const lines = text.split('\n').map(l => l.trim()).filter(l => l);
             
             if (type === 'tanazor') {
-                const headLine = lines[0];
-                const headParts = headLine.split(/[:\s\-]+/).filter(x => x && x.length > 1);
-                if(headParts.length >= 2) {
-                    card.querySelector('.t1').value = headParts[0];
-                    card.querySelector('.t2').value = headParts[1];
-                }
-                const choices = lines.filter(l => {
-                    const parts = l.split(/[:\s\-]+/).filter(x => x && x.length > 1);
-                    return !(parts.includes(headParts[0]) && parts.includes(headParts[1]));
-                }).filter(l => /^[أبجدهـ][\s\)\-]/.test(l) || l.includes(':') || l.includes('-'));
-
-                const ops1 = card.querySelectorAll('.op1');
-                const ops2 = card.querySelectorAll('.op2');
-                choices.forEach((l, i) => {
-                    if(i < 4) {
-                        const pair = l.replace(/^[أبجدهـ][\s\)\-:]+/, '').split(/[:\s\-]+/).filter(x => x);
-                        if(pair.length >= 2) {
-                            ops1[i].value = pair[0];
-                            ops2[i].value = pair[1];
-                        }
-                    }
-                });
+                const headParts = lines[0].split(/[:\s\-]+/).filter(x => x && x.length > 1);
+                if(headParts.length >= 2) { card.querySelector('.t1').value = headParts[0]; card.querySelector('.t2').value = headParts[1]; }
+                const choices = lines.filter(l => /^[أبجدهـ][\s\)\-]/.test(l) || l.includes(':') || l.includes('-'));
+                const ops1 = card.querySelectorAll('.op1'); const ops2 = card.querySelectorAll('.op2');
+                choices.forEach((l, i) => { if(i < 4) { const pair = l.replace(/^[أبجدهـ][\s\)\-:]+/, '').split(/[:\s\-]+/).filter(x => x); if(pair.length >= 2) { ops1[i].value = pair[0]; ops2[i].value = pair[1]; } } });
             } else if (type === 'shaza' || type === 'irtibat') {
-                // المفردة الشاذة أو الارتباط والاختلاف
                 const words = text.split(/[\-\s,|،\n]+/).filter(w => w.length > 1 && !/^[أبجدهـ]$/.test(w));
-                // إذا كان النوع "ارتباط واختلاف" وكان هناك 5 كلمات، اجعل الأولى هي رأس السؤال
-                if (type === 'irtibat' && words.length >= 5) {
-                    card.querySelector('.q-main').value = words[0];
-                    const opts = card.querySelectorAll('.opt');
-                    words.slice(1, 5).forEach((w, i) => { if(i < 4) opts[i].value = w; });
-                } else {
-                    const opts = card.querySelectorAll('.opt');
-                    words.forEach((w, i) => { if(i < 4) opts[i].value = w; });
-                }
+                if (type === 'irtibat' && words.length >= 5) { card.querySelector('.q-main').value = words[0]; const opts = card.querySelectorAll('.opt'); words.slice(1, 5).forEach((w, i) => { if(i < 4) opts[i].value = w; }); }
+                else { const opts = card.querySelectorAll('.opt'); words.forEach((w, i) => { if(i < 4) opts[i].value = w; }); }
             } else if (type === 'estieab') {
-                if(lines.length >= 3) {
-                    card.querySelector('.estieab-box').innerText = lines[0];
-                    card.querySelector('.q-main').value = lines[1];
-                    const choiceLines = lines.slice(2).filter(l => /^[أبجدهـ][\s\)\-]/.test(l));
-                    const opts = card.querySelectorAll('.opt');
-                    choiceLines.forEach((l, i) => { if(i < 4) opts[i].value = l.replace(/^[أبجدهـ][\s\)\-]+/, ''); });
-                }
+                if(lines.length >= 3) { card.querySelector('.estieab-box').innerText = lines[0]; card.querySelector('.q-main').value = lines[1]; const choiceLines = lines.slice(2).filter(l => /^[أبجدهـ][\s\)\-]/.test(l)); const opts = card.querySelectorAll('.opt'); choiceLines.forEach((l, i) => { if(i < 4) opts[i].value = l.replace(/^[أبجدهـ][\s\)\-]+/, ''); }); }
             } else {
                 card.querySelector('.q-main').value = lines[0];
                 const choiceLines = lines.slice(1).filter(l => /^[أبجدهـ][\s\)\-]/.test(l) || l.includes('-'));
                 const opts = card.querySelectorAll('.opt');
-                choiceLines.forEach((l, i) => {
-                    if(i < 4) opts[i].value = l.replace(/^[أبجدهـ][\s\)\-]+/, '');
-                });
+                choiceLines.forEach((l, i) => { if(i < 4) opts[i].value = l.replace(/^[أبجدهـ][\s\)\-]+/, ''); });
             }
             saveAll();
         }
@@ -263,29 +220,16 @@
             return h;
         }
 
-        function toggleType(s) { 
-            const c = s.closest('.question-card'); 
-            c.querySelector('.q-type-label').innerText = typeMap[s.value];
-            c.querySelector('.q-area').innerHTML = renderQArea(s.value,null); 
-            c.querySelector('.options-grid').innerHTML = renderOptions(s.value,null); 
-            saveAll(); 
-        }
-
+        function toggleType(s) { const c = s.closest('.question-card'); c.querySelector('.q-type-label').innerText = typeMap[s.value]; c.querySelector('.q-area').innerHTML = renderQArea(s.value,null); c.querySelector('.options-grid').innerHTML = renderOptions(s.value,null); saveAll(); }
         function updateNumbers() { document.querySelectorAll('.q-number-badge').forEach((b, i) => b.innerText = `السؤال ${i+1}`); }
 
         function gradeExam() {
-            const cards = document.querySelectorAll('.question-card');
-            let unsolvedCount = 0;
+            const cards = document.querySelectorAll('.question-card'); let unsolvedCount = 0;
             cards.forEach(card => { if (!card.querySelector('.selected-opt')) { card.classList.add('unsolved'); unsolvedCount++; } });
             if (unsolvedCount > 0) { alert(`عذراً! لم تحل جميع الأسئلة. لديك ${unsolvedCount} سؤال غير مكتمل.`); return; }
-
-            let s = 0; const report = document.getElementById('report-body'); report.innerHTML = "";
-            document.body.classList.add('locked-mode');
+            let s = 0; const report = document.getElementById('report-body'); report.innerHTML = ""; document.body.classList.add('locked-mode');
             cards.forEach((c, i) => {
-                const selFull = c.querySelector('.selected-opt .opt-label')?.innerText || "";
-                const sel = selFull.replace(') ', '').trim();
-                const corFull = c.querySelector('.ans-val').value.trim().toUpperCase();
-                const isCor = sel === corFull; if(isCor) s++;
+                const selFull = c.querySelector('.selected-opt .opt-label')?.innerText || ""; const sel = selFull.replace(') ', '').trim(); const corFull = c.querySelector('.ans-val').value.trim().toUpperCase(); const isCor = sel === corFull; if(isCor) s++;
                 const qTxt = c.querySelector('.q-main')?.value || (c.querySelector('.t1')?.value + " : " + c.querySelector('.t2')?.value) || "سؤال";
                 report.innerHTML += `<tr><td>${i+1}</td><td style="text-align:right">${qTxt}</td><td style="color:${isCor?'#10b981':'#ef4444'}">${sel||'--'}</td><td style="color:#10b981">${corFull}</td><td>${isCor?'✅':'❌'}</td></tr>`;
             });
@@ -294,15 +238,7 @@
         }
 
         function closeReport() { document.getElementById('report-modal').style.display = 'none'; document.getElementById('modal-overlay').style.display = 'none'; }
-        
-        function resetExam() { 
-            if(confirm("إعادة الاختبار؟ سيتم مسح جميع الإجابات الحالية.")) { 
-                document.body.classList.remove('locked-mode'); 
-                document.querySelectorAll('.selected-opt').forEach(r => r.classList.remove('selected-opt')); 
-                document.querySelectorAll('.question-card').forEach(c => { c.classList.remove('unsolved'); c.style.borderColor = "#e2e8f0"; });
-                window.scrollTo({top:0,behavior:'smooth'}); 
-            } 
-        }
+        function resetExam() { if(confirm("إعادة الاختبار؟ سيتم مسح جميع الإجابات الحالية.")) { document.body.classList.remove('locked-mode'); document.querySelectorAll('.selected-opt').forEach(r => r.classList.remove('selected-opt')); document.querySelectorAll('.question-card').forEach(c => { c.classList.remove('unsolved'); c.style.borderColor = "#e2e8f0"; }); window.scrollTo({top:0,behavior:'smooth'}); } }
 
         function saveAll() {
             const qs = []; document.querySelectorAll('.question-card').forEach(c => {
@@ -316,14 +252,8 @@
 
         function loadQuestions() {
             const examId = new URLSearchParams(window.location.search).get('exam');
-            if (examId) {
-                document.body.classList.add('student-mode');
-                document.getElementById('student-actions').style.display = 'block';
-                loadSpecificExam(examId);
-            } else {
-                const s = localStorage.getItem('fifi_v90_injected');
-                if(s) { document.getElementById('quiz-content').innerHTML = ""; JSON.parse(s).forEach(q=>addQuestion(q)); }
-            }
+            if (examId) { document.body.classList.add('student-mode'); document.getElementById('student-actions').style.display = 'block'; loadSpecificExam(examId); }
+            else { const s = localStorage.getItem('fifi_v90_injected'); if(s) { document.getElementById('quiz-content').innerHTML = ""; JSON.parse(s).forEach(q=>addQuestion(q)); } }
         }
 
         function clearAll() { if(confirm("مسح الكل؟")) { localStorage.clear(); document.getElementById('quiz-content').innerHTML = ""; } }
@@ -340,54 +270,29 @@
                 area.style = "width:850px; padding:25px; background:#f8fafc; position:absolute; top:-9999px;";
                 area.appendChild(document.getElementById('main-header').cloneNode(true));
                 cards.slice(i, i+3).forEach((orig, idx) => {
-                    const clone = orig.cloneNode(true);
-                    const type = orig.querySelector('.type-select').value;
+                    const clone = orig.cloneNode(true); const type = orig.querySelector('.type-select').value;
                     clone.querySelector('.card-meta').innerHTML = `<span class="q-number-badge">السؤال ${i+idx+1}</span><span style="font-size:0.85rem; font-weight:bold; color:#3b82f6; background:#eff6ff; padding:4px 12px; border-radius:20px; margin-right:15px;">${typeMap[type]}</span>`;
-                    
                     if(type === 'tanazor') {
                         clone.querySelector('.pair-row').innerHTML = `<div style="display:flex; justify-content:center; align-items:center; width:100%; font-weight:bold; font-size:1.5rem; color:var(--q-red);"><span>${orig.querySelector('.t1').value}</span><span style="margin:0 10px;"> : </span><span>${orig.querySelector('.t2').value}</span></div>`;
-                        clone.querySelectorAll('.opt-pair-row').forEach((r, oIdx) => {
-                            r.innerHTML = `<span style="background:var(--royal-blue); color:white; padding:2px 8px; border-radius:5px; margin-left:10px;">${labels[oIdx]}</span> <div style="display:flex; justify-content:center; width:100%; font-weight:bold;"><span>${orig.querySelectorAll('.op1')[oIdx].value}</span><span style="margin:0 5px;"> : </span><span>${orig.querySelectorAll('.op2')[oIdx].value}</span></div>`;
-                        });
+                        clone.querySelectorAll('.opt-pair-row').forEach((r, oIdx) => { r.innerHTML = `<span style="background:var(--royal-blue); color:white; padding:2px 8px; border-radius:5px; margin-left:10px;">${labels[oIdx]}</span> <div style="display:flex; justify-content:center; width:100%; font-weight:bold;"><span>${orig.querySelectorAll('.op1')[oIdx].value}</span><span style="margin:0 5px;"> : </span><span>${orig.querySelectorAll('.op2')[oIdx].value}</span></div>`; });
                     } else {
-                        clone.querySelectorAll('input, .estieab-box, textarea').forEach((inp, ii) => {
-                            const val = inp.value || inp.innerText;
-                            const div = document.createElement('div'); div.innerText = val;
-                            const style = window.getComputedStyle(inp);
-                            div.style = `background:${style.backgroundColor}; color:var(--q-red); padding:10px; border-radius:10px; font-weight:bold; font-size:1.15rem; border:${style.border}; margin-bottom:10px; text-align:right; white-space:pre-wrap;`;
-                            inp.replaceWith(div);
-                        });
-                        clone.querySelectorAll('.opt-pair-row').forEach((r, oIdx) => {
-                            const val = orig.querySelectorAll('.opt')[oIdx].value;
-                            r.innerHTML = `<span style="background:var(--royal-blue); color:white; padding:2px 8px; border-radius:5px; margin-left:10px;">${labels[oIdx]}</span> <span style="font-weight:bold; color:#000;">${val}</span>`;
-                        });
+                        clone.querySelectorAll('input, .estieab-box, textarea').forEach((inp) => { const div = document.createElement('div'); div.innerText = inp.value || inp.innerText; const style = window.getComputedStyle(inp); div.style = `background:${style.backgroundColor}; color:var(--q-red); padding:10px; border-radius:10px; font-weight:bold; font-size:1.15rem; border:${style.border}; margin-bottom:10px; text-align:right; white-space:pre-wrap;`; inp.replaceWith(div); });
+                        clone.querySelectorAll('.opt-pair-row').forEach((r, oIdx) => { const val = orig.querySelectorAll('.opt')[oIdx].value; r.innerHTML = `<span style="background:var(--royal-blue); color:white; padding:2px 8px; border-radius:5px; margin-left:10px;">${labels[oIdx]}</span> <span style="font-weight:bold; color:#000;">${val}</span>`; });
                     }
-                    clone.querySelectorAll('.remove-btn, .type-select, .correct-ans-box, .smart-paste-area, .admin-only').forEach(e => e.remove());
-                    area.appendChild(clone);
+                    clone.querySelectorAll('.remove-btn, .type-select, .correct-ans-box, .smart-paste-area, .admin-only').forEach(e => e.remove()); area.appendChild(clone);
                 });
                 document.body.appendChild(area);
-                await html2canvas(area, { scale: 2.5, useCORS: true }).then(c => {
-                    const l = document.createElement('a'); l.download = `اختبار_الفيفي_صورة_${Math.floor(i/3)+1}.png`; l.href = c.toDataURL(); l.click();
-                });
+                await html2canvas(area, { scale: 2.5, useCORS: true }).then(c => { const l = document.createElement('a'); l.download = `اختبار_الفيفي_صورة_${Math.floor(i/3)+1}.png`; l.href = c.toDataURL(); l.click(); });
                 document.body.removeChild(area);
             }
         }
 
         function saveAsPDF() {
-            const content = document.createElement('div');
-            const cards = Array.from(document.querySelectorAll('.question-card'));
+            const content = document.createElement('div'); const cards = Array.from(document.querySelectorAll('.question-card'));
             for (let i = 0; i < cards.length; i += 3) {
-                const page = document.createElement('div');
-                page.style = "width:210mm; padding:15mm; background:white; box-sizing:border-box; font-family: Segoe UI, Tahoma, sans-serif;";
-                page.appendChild(document.getElementById('main-header').cloneNode(true));
-                cards.slice(i, i+3).forEach((orig, idx) => {
-                    const clone = orig.cloneNode(true);
-                    clone.querySelector('.card-meta').innerHTML = `<span class="q-number-badge">السؤال ${i+idx+1}</span>`;
-                    clone.querySelectorAll('.remove-btn, .type-select, .correct-ans-box, .smart-paste-area, .admin-only').forEach(e => e.remove());
-                    page.appendChild(clone);
-                });
-                content.appendChild(page);
-                if (i+3 < cards.length) { const pb = document.createElement('div'); pb.style.pageBreakAfter = "always"; content.appendChild(pb); }
+                const page = document.createElement('div'); page.style = "width:210mm; padding:15mm; background:white; box-sizing:border-box;"; page.appendChild(document.getElementById('main-header').cloneNode(true));
+                cards.slice(i, i+3).forEach((orig, idx) => { const clone = orig.cloneNode(true); clone.querySelector('.card-meta').innerHTML = `<span class="q-number-badge">السؤال ${i+idx+1}</span>`; clone.querySelectorAll('.remove-btn, .type-select, .correct-ans-box, .smart-paste-area, .admin-only').forEach(e => e.remove()); page.appendChild(clone); });
+                content.appendChild(page); if (i+3 < cards.length) { const pb = document.createElement('div'); pb.style.pageBreakAfter = "always"; content.appendChild(pb); }
             }
             html2pdf().from(content).save();
         }
