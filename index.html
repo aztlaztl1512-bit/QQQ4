@@ -37,6 +37,10 @@
 
         .card-meta { display: flex; align-items: center; gap: 10px; margin-bottom: 15px; flex-wrap: wrap; }
         .q-number-badge { background: var(--royal-blue); color: white; padding: 2px 15px; border-radius: 50px; font-weight: 900; font-size: 0.9rem; }
+        
+        /* تنسيق نوع السؤال للطالب */
+        .q-type-label { font-size: 0.8rem; font-weight: 900; color: #3b82f6; background: #eff6ff; padding: 4px 12px; border-radius: 20px; border: 1px solid #dbeafe; }
+
         .type-select { background: #f1f5f9; border: none; padding: 8px; border-radius: 10px; font-weight: 700; font-family: 'Cairo'; cursor: pointer; }
 
         .estieab-box { background: #fff9c4 !important; border: 2px solid #fbc02d; border-radius: 12px; padding: 15px; margin-bottom: 15px; color: #000; font-weight: 700; line-height: 1.8; width: 100%; box-sizing: border-box; text-align: right; min-height: 100px; height: auto; white-space: pre-wrap; }
@@ -64,14 +68,9 @@
         .btn-link { background: #06b6d4; } .btn-del { background: #f97316; } .btn-pdf { background: #ef4444; }
         .btn-img { background: #10b981; } .btn-clear { background: #64748b; padding: 10px; border-radius: 50%; }
 
-        /* قوانين وضع الطالب */
-        body.student-mode .controls, 
-        body.student-mode .remove-btn, 
-        body.student-mode .type-select, 
-        body.student-mode .correct-ans-box, 
-        body.student-mode .smart-paste-area,
-        body.student-mode .admin-only { display: none !important; }
-        
+        body.student-mode .controls, body.student-mode .remove-btn, body.student-mode .type-select, body.student-mode .correct-ans-box, body.student-mode .smart-paste-area, body.student-mode .admin-only { display: none !important; }
+        body:not(.student-mode) .q-type-label { display: none; } /* إخفاء الليبل في وضع الأدمن لأن القائمة موجودة */
+
         body.student-mode .q-text-input, body.student-mode .opt-word, body.student-mode .pair-word { pointer-events: none; border: none; background: transparent !important; }
         body.student-mode .selected-opt { background: #dbeafe !important; border: 2px solid #3b82f6 !important; }
         body.locked-mode .opt-pair-row { pointer-events: none !important; }
@@ -149,6 +148,7 @@
                 <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:10px">
                     <div class="card-meta">
                         <span class="q-number-badge"></span>
+                        <span class="q-type-label">${typeMap[type]}</span>
                         <select class="type-select" onchange="toggleType(this)">${Object.keys(typeMap).map(k=>`<option value="${k}" ${type===k?'selected':''}>${typeMap[k]}</option>`).join('')}</select>
                         <span class="admin-only" style="font-size:0.8rem; color:var(--success-green); font-weight:bold"><i class="fas fa-magic"></i> الصق هنا للتوزيع التلقائي</span>
                     </div>
@@ -244,7 +244,14 @@
             return h;
         }
 
-        function toggleType(s) { const c = s.closest('.question-card'); c.querySelector('.q-area').innerHTML = renderQArea(s.value,null); c.querySelector('.options-grid').innerHTML = renderOptions(s.value,null); saveAll(); }
+        function toggleType(s) { 
+            const c = s.closest('.question-card'); 
+            c.querySelector('.q-type-label').innerText = typeMap[s.value];
+            c.querySelector('.q-area').innerHTML = renderQArea(s.value,null); 
+            c.querySelector('.options-grid').innerHTML = renderOptions(s.value,null); 
+            saveAll(); 
+        }
+
         function updateNumbers() { document.querySelectorAll('.q-number-badge').forEach((b, i) => b.innerText = `السؤال ${i+1}`); }
 
         function gradeExam() {
