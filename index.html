@@ -39,26 +39,15 @@
 
         .estieab-box { background: #fff9c4 !important; border: 2px solid #fbc02d; border-radius: 12px; padding: 15px; margin-bottom: 15px; color: #000; font-weight: 700; line-height: 1.8; width: 100%; box-sizing: border-box; text-align: right; min-height: 100px; height: auto; white-space: pre-wrap; }
         
-        /* التعديل هنا: تصغير حجم الخط وجعل الارتفاع مرن للسؤال */
         .q-text-input { 
-            width: 100%; 
-            padding: 12px 15px; 
-            border: 2px solid #e2e8f0; 
-            border-radius: 12px; 
-            color: var(--q-red); 
-            font-weight: 900; 
-            font-size: 1.15rem; /* تصغير الخط قليلاً */
-            margin-bottom: 15px; 
-            outline: none; 
-            text-align: right; 
-            box-sizing: border-box; 
-            min-height: 50px; 
-            height: auto; /* السماح بالتمدد الطولي */
-            word-wrap: break-word;
+            width: 100%; padding: 12px 15px; border: 2px solid #e2e8f0; border-radius: 12px; 
+            color: var(--q-red); font-weight: 900; font-size: 1.15rem; margin-bottom: 15px; 
+            outline: none; text-align: right; box-sizing: border-box; min-height: 50px; height: auto; word-wrap: break-word;
         }
 
         .options-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
         .opt-pair-row { display: flex; align-items: center; background: white; border: 1.5px solid #d1d5db; border-radius: 10px; padding: 12px; box-sizing: border-box; cursor: pointer; transition: 0.2s; }
+        .opt-label { font-weight: 900; color: var(--royal-blue); margin-left: 5px; white-space: pre; }
         .opt-word { width: 100%; border: none; outline: none; font-weight: 900; color: #000; background: transparent; text-align: right; font-family: 'Cairo'; cursor: inherit; font-size: 0.95rem; }
 
         .pair-row { display: flex; align-items: center; justify-content: center; gap: 10px; margin-bottom: 15px; background: #fff1f2; padding: 15px; border-radius: 12px; border: 1.5px dashed #fca5a5; width: 100%; box-sizing: border-box; }
@@ -124,7 +113,8 @@
 
     <script>
         const typeMap = { 'normal': 'إكمال جمل / خطأ سياقي', 'tanazor': 'تناظر لفظي ( : )', 'estieab': 'استيعاب المقروء', 'shaza': 'المفردة الشاذة', 'irtibat': 'الارتباط والاختلاف' };
-        
+        const labels = ['أ) ', 'ب) ', 'ج) ', 'د) '];
+
         const firebaseConfig = {
             apiKey: "AIzaSyAVrIim7aXjg0hGrMk0qVrXT8geRIpHoBk",
             authDomain: "youy-apps.firebaseapp.com",
@@ -235,10 +225,10 @@
         }
 
         function renderOptions(t, d) {
-            let h = ''; const labels = ['أ','ب','ج','د'];
+            let h = '';
             for(let i=0; i<4; i++) {
-                if(t==='tanazor') h+=`<div class="opt-pair-row"><span>${labels[i]}</span><input type="text" class="opt-word op1" placeholder="1" value="${d?.opt_pair_val1?.[i] || ''}" oninput="saveAll()"><span style="color:red; font-weight:900"> : </span><input type="text" class="opt-word op2" placeholder="2" value="${d?.opt_pair_val2?.[i] || ''}" oninput="saveAll()"></div>`;
-                else h+=`<div class="opt-pair-row"><span>${labels[i]}</span><input type="text" class="opt-word opt" style="margin-right:10px" placeholder="خيار ${labels[i]}" value="${d?.opts?.[i]||''}" oninput="saveAll()"></div>`;
+                if(t==='tanazor') h+=`<div class="opt-pair-row"><span class="opt-label">${labels[i]}</span><input type="text" class="opt-word op1" placeholder="1" value="${d?.opt_pair_val1?.[i] || ''}" oninput="saveAll()"><span style="color:red; font-weight:900"> : </span><input type="text" class="opt-word op2" placeholder="2" value="${d?.opt_pair_val2?.[i] || ''}" oninput="saveAll()"></div>`;
+                else h+=`<div class="opt-pair-row"><span class="opt-label">${labels[i]}</span><input type="text" class="opt-word opt" style="margin-right:5px" placeholder="خيار ${labels[i]}" value="${d?.opts?.[i]||''}" oninput="saveAll()"></div>`;
             }
             return h;
         }
@@ -251,11 +241,12 @@
             let s = 0; const report = document.getElementById('report-body'); report.innerHTML = "";
             document.body.classList.add('locked-mode');
             cards.forEach((c, i) => {
-                const sel = c.querySelector('.selected-opt span')?.innerText;
-                const cor = c.querySelector('.ans-val').value.trim().toUpperCase();
-                const isCor = sel === cor; if(isCor) s++;
+                const selFull = c.querySelector('.selected-opt .opt-label')?.innerText || "";
+                const sel = selFull.replace(') ', '').trim();
+                const corFull = c.querySelector('.ans-val').value.trim().toUpperCase();
+                const isCor = sel === corFull; if(isCor) s++;
                 const qTxt = c.querySelector('.q-main')?.value || (c.querySelector('.t1')?.value + " : " + c.querySelector('.t2')?.value) || "سؤال";
-                report.innerHTML += `<tr><td>${i+1}</td><td style="text-align:right">${qTxt}</td><td style="color:${isCor?'#10b981':'#ef4444'}">${sel||'--'}</td><td style="color:#10b981">${cor}</td><td>${isCor?'✅':'❌'}</td></tr>`;
+                report.innerHTML += `<tr><td>${i+1}</td><td style="text-align:right">${qTxt}</td><td style="color:${isCor?'#10b981':'#ef4444'}">${sel||'--'}</td><td style="color:#10b981">${corFull}</td><td>${isCor?'✅':'❌'}</td></tr>`;
             });
             document.getElementById('score-summary').innerText = `النتيجة النهائية: ${s} من ${cards.length}`;
             document.getElementById('report-modal').style.display = 'block'; document.getElementById('modal-overlay').style.display = 'block';
@@ -307,7 +298,7 @@
                     if(type === 'tanazor') {
                         clone.querySelector('.pair-row').innerHTML = `<div style="display:flex; justify-content:center; align-items:center; width:100%; font-weight:900; font-size:1.5rem; color:var(--q-red);"><span>${orig.querySelector('.t1').value}</span><span style="margin:0 10px;"> : </span><span>${orig.querySelector('.t2').value}</span></div>`;
                         clone.querySelectorAll('.opt-pair-row').forEach((r, oIdx) => {
-                            r.innerHTML = `<span style="background:var(--royal-blue); color:white; padding:2px 8px; border-radius:5px; margin-left:10px;">${['أ','ب','ج','د'][oIdx]}</span> <div style="display:flex; justify-content:center; width:100%; font-weight:900;"><span>${orig.querySelectorAll('.op1')[oIdx].value}</span><span style="margin:0 5px;"> : </span><span>${orig.querySelectorAll('.op2')[oIdx].value}</span></div>`;
+                            r.innerHTML = `<span style="background:var(--royal-blue); color:white; padding:2px 8px; border-radius:5px; margin-left:10px;">${labels[oIdx]}</span> <div style="display:flex; justify-content:center; width:100%; font-weight:900;"><span>${orig.querySelectorAll('.op1')[oIdx].value}</span><span style="margin:0 5px;"> : </span><span>${orig.querySelectorAll('.op2')[oIdx].value}</span></div>`;
                         });
                     } else {
                         clone.querySelectorAll('input, .estieab-box, textarea').forEach((inp, ii) => {
@@ -318,9 +309,8 @@
                             inp.replaceWith(div);
                         });
                         clone.querySelectorAll('.opt-pair-row').forEach((r, oIdx) => {
-                            const label = ['أ','ب','ج','د'][oIdx];
                             const val = orig.querySelectorAll('.opt')[oIdx].value;
-                            r.innerHTML = `<span style="background:var(--royal-blue); color:white; padding:2px 8px; border-radius:5px; margin-left:10px;">${label}</span> <span style="font-weight:900;">${val}</span>`;
+                            r.innerHTML = `<span style="background:var(--royal-blue); color:white; padding:2px 8px; border-radius:5px; margin-left:10px;">${labels[oIdx]}</span> <span style="font-weight:900;">${val}</span>`;
                         });
                     }
                     clone.querySelectorAll('.remove-btn, .type-select, .correct-ans-box, .smart-paste-area').forEach(e => e.remove());
